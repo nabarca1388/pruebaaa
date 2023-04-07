@@ -53,7 +53,6 @@ class ManagerUsuarios {
 
 
     addProduct = (obj) => {
-
         const usuarios = fs.readFileSync(this.ruta, 'utf-8');
         this.usuariosObj = JSON.parse(usuarios);
 
@@ -70,25 +69,26 @@ class ManagerUsuarios {
             }
             this.usuariosObj.push(productoNuevo);
             this.fillFile(productoNuevo);
-
-        } else {
-            this.usuariosObj.forEach((product) => {
-                if (product.code === obj.code) {
-                    console.log('ERROR-CODIGO REPETIDO');
-                } else {
-                    const productoNuevo = {
-                        id: ManagerUsuarios.id = this.getProductId(),
-                        title: obj.title,
-                        description: obj.description,
-                        price: obj.price,
-                        code: obj.code,
-                        stock: obj.stock
-                    }
-                    this.usuariosObj.push(productoNuevo);
-                    this.fillFile(productoNuevo);
-                }
-            })
+            return;
         }
+        
+        const products = this.usuariosObj.filter((product) => product.code === obj.code);
+        
+        if (products && products.length > 0) {
+            console.log('ERROR-CODIGO REPETIDO');
+            return;
+        }
+
+        const productoNuevo = {
+            id: ManagerUsuarios.id = this.getProductId(),
+            title: obj.title,
+            description: obj.description,
+            price: obj.price,
+            code: obj.code,
+            stock: obj.stock
+        }
+        this.usuariosObj.push(productoNuevo);
+        this.fillFile(productoNuevo);
     }
 
 }
