@@ -15,30 +15,30 @@ class ManagerUsuarios {
 
     getProductById(id) {
         const productoEncontrado = this.products.find(productoEncontrado => productoEncontrado.id === id)
-        if(productoEncontrado){
+        if (productoEncontrado) {
             return console.log('Encontrado:', productoEncontrado);
-        }else{
+        } else {
             console.log('Producto NO encotrado');
         }
     }
 
-    crearArchivo = async () => {
-            //this.products.push(obj);
-            const cadenaArchivo = JSON.stringify(this.products);
-            await fs.promises.writeFile(this.ruta, cadenaArchivo);
-            console.log('Archivo creado');
+    createFile = () => {
+        //this.products.push(obj);
+        const cadenaArchivo = JSON.stringify(this.products);
+        fs.writeFileSync(this.ruta, cadenaArchivo);
+        console.log('Archivo creado');
     }
 
-    llenarArchivo = async (obj) => {
+    fillFile = (obj) => {
         this.products.push(obj);
         const cadenaArchivo = JSON.stringify(this.products);
-        await fs.promises.writeFile(this.ruta, cadenaArchivo);
+        fs.writeFileSync(this.ruta, cadenaArchivo);
         console.log('Archivo actualizado');
     }
 
 
-    consultarArchivo = async () => {
-        const usuarios = await fs.promises.readFile(this.ruta, 'utf-8');
+    readFile = () => {
+        const usuarios = fs.readFileSync(this.ruta, 'utf-8');
         this.usuariosObj = JSON.parse(usuarios);
         this.usuariosObj.forEach((product) => {
             //console.log(product.title);
@@ -52,17 +52,14 @@ class ManagerUsuarios {
     }
 
 
-    addProduct = async (obj) => {
-        
-        const usuarios = await fs.promises.readFile(this.ruta, 'utf-8');
+    addProduct = (obj) => {
+
+        const usuarios = fs.readFileSync(this.ruta, 'utf-8');
         this.usuariosObj = JSON.parse(usuarios);
-        
 
-        console.log(this.usuariosObj.code);
-        console.log(this.usuariosObj.length); 
+        console.log(this.usuariosObj);
 
-        
-        if(this.usuariosObj.length === 0){
+        if (this.usuariosObj.length === 0) {
             const productoNuevo = {
                 id: ManagerUsuarios.id = this.getProductId(),
                 title: obj.title,
@@ -72,13 +69,13 @@ class ManagerUsuarios {
                 stock: obj.stock
             }
             this.usuariosObj.push(productoNuevo);
-            this.llenarArchivo(productoNuevo);
+            this.fillFile(productoNuevo);
 
-        }else{
+        } else {
             this.usuariosObj.forEach((product) => {
-                if(product.code === obj.code){
+                if (product.code === obj.code) {
                     console.log('ERROR-CODIGO REPETIDO');
-                }else{
+                } else {
                     const productoNuevo = {
                         id: ManagerUsuarios.id = this.getProductId(),
                         title: obj.title,
@@ -88,44 +85,42 @@ class ManagerUsuarios {
                         stock: obj.stock
                     }
                     this.usuariosObj.push(productoNuevo);
-                    this.llenarArchivo(productoNuevo);
+                    this.fillFile(productoNuevo);
                 }
             })
-        } 
+        }
     }
-    
+
 }
 
 
 const manager = new ManagerUsuarios('./usuarios.json');
+const products = [
+    {
+        title: 'Computadora',
+        description: 'interactivos',
+        price: 300,
+        code: '2222',
+        stock: 20
+    },
+    {
+        title: 'Televisor',
+        description: 'interactivos',
+        price: 300,
+        code: '1111',
+        stock: 20
+    },
+    {
+        title: 'Heladera',
+        description: 'interactivos',
+        price: 300,
+        code: '1111',
+        stock: 20
+    }
+];
 
+manager.createFile();
 
-
-manager.crearArchivo();
-
-manager.addProduct({
-    title: 'Computadora',
-    description: 'interactivos',
-    price: 300,
-    code: '2222',
-    stock: 20
-});
-
-manager.addProduct({
-    title: 'Televisor',
-    description: 'interactivos',
-    price: 300,
-    code: '1111',
-    stock: 20
-});
-
-manager.addProduct({
-    title: 'Heladera',
-    description: 'interactivos',
-    price: 300,
-    code: '1111',
-    stock: 20
-});
-
-
-
+products.forEach(product => {
+    manager.addProduct(product);
+})

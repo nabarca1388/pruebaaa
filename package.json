@@ -1,0 +1,24 @@
+{
+  "name": "pruebaaa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js | pino-pretty"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nabarca1388/pruebaaa.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nabarca1388/pruebaaa/issues"
+  },
+  "homepage": "https://github.com/nabarca1388/pruebaaa#readme",
+  "dependencies": {
+    "pino-pretty": "^10.0.0"
+  }
+}
