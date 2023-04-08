@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "title": "Computadora",
+        "description": "interactivos",
+        "price": 300,
+        "code": "2222",
+        "stock": 20
+    },
+    {
+        "id": 3,
+        "title": "Mesa",
+        "description": "interactivos",
+        "price": 300,
+        "code": "3333",
+        "stock": 20
+    }
+]
